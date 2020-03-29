@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="创建 字面值直接创建  1const regExp0 &#x3D; &#x2F;wh&#x2F;   新建一个正则表达式对象  12345const regExp1 &#x3D; new RegExp(&quot;wh&quot;)	&#x2F;&#x2F;用字符串创建正则表达式对象const regExp2 &#x3D; new RegExp(&#x2F;wh&#x2F;)	&#x2F;&amp;#x2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript正则表达式（含ES6扩展语法）">
+<meta property="og:url" content="http://yoursite.com/2020/03/29/JavaScript%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
+<meta property="og:site_name" content="氷面鏡">
+<meta property="og:description" content="创建 字面值直接创建  1const regExp0 &#x3D; &#x2F;wh&#x2F;   新建一个正则表达式对象  12345const regExp1 &#x3D; new RegExp(&quot;wh&quot;)	&#x2F;&#x2F;用字符串创建正则表达式对象const regExp2 &#x3D; new RegExp(&#x2F;wh&#x2F;)	&#x2F;&amp;#x2">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-29T15:09:26.000Z">
+<meta property="article:modified_time" content="2020-03-29T15:11:51.789Z">
+<meta property="article:author" content="夏紀ゆず">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/29/JavaScript正则表达式/"/>
+
+
+
+
+
+  <title>JavaScript正则表达式（含ES6扩展语法） | 氷面鏡</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">氷面鏡</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/29/JavaScript%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="夏紀ゆず">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="氷面鏡">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JavaScript正则表达式（含ES6扩展语法）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-29T23:09:26+08:00">
+                2020-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><ul>
+<li>字面值直接创建</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const regExp0 &#x3D; &#x2F;wh&#x2F;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>新建一个正则表达式对象</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const regExp1 &#x3D; new RegExp(&quot;wh&quot;)	&#x2F;&#x2F;用字符串创建正则表达式对象</span><br><span class="line">const regExp2 &#x3D; new RegExp(&#x2F;wh&#x2F;)	&#x2F;&#x2F;用字面值创建正则表达式对象</span><br><span class="line"></span><br><span class="line">reg1&#x3D;&#x3D;reg2							&#x2F;&#x2F;false</span><br><span class="line">reg1.toString() &#x3D;&#x3D;&#x3D; reg2.toLocaleString()	&#x2F;&#x2F;true</span><br></pre></td></tr></table></figure>
+
+<p>toString()与toLocaleString()方法都会返回正则表达式字面值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">new RegExp(new RegExp(&#x2F;wh&#x2F;g),&quot;i&quot;)		&#x2F;&#x2F; &#x2F;wh&#x2F;i</span><br></pre></td></tr></table></figure>
+
+<p><strong>【ES6】</strong>RegExp构造函数第一个参数为RegExp对象时，可以使用第二个参数传入修饰符，覆盖原有的修饰符</p>
+<h3 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h3><ul>
+<li><code>i</code>：执行不区分大小写的匹配</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;Wh&#x2F;i.toString()&#x3D;&#x3D;&#x2F;wH&#x2F;i.toString()  &#x2F;&#x2F;false，同一个匹配规则不同的表达式</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>g</code>：执行全局匹配，即找到所有匹配为止，与exec()方法连用时，每执行一次，都从当前剩余子串开始，一次返回一个匹配串</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const str &#x3D; &quot;where when what&quot;</span><br><span class="line">const reg &#x3D; &#x2F;wh.*&#x2F;g</span><br><span class="line"></span><br><span class="line">reg.exec(str)		&#x2F;&#x2F;index:0</span><br><span class="line">reg.exec(str)		&#x2F;&#x2F;index:6		对上个匹配后的剩余子串进行匹配</span><br><span class="line">reg.exec(str)		&#x2F;&#x2F;index:11</span><br><span class="line">reg.exec(str)		&#x2F;&#x2F;null			剩余子串为空</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>m</code>：多行匹配模式，必须与^或$搭配使用，否则m修饰符无效。与^搭配使用时，匹配每一行的开头至换行符的子串；与$搭配使用时，匹配最后一行行尾至倒数第一个换行符的子串</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const str1 &#x3D; &quot;Can u cAn a caN&quot;</span><br><span class="line">const str2 &#x3D; &quot;Can u \ncAn a caN&quot;</span><br><span class="line">const str3 &#x3D; &quot;Can u \rcAn \na caN&quot;</span><br><span class="line"></span><br><span class="line">const reg1 &#x3D; &#x2F;^C.*&#x2F;img</span><br><span class="line">const reg2 &#x3D; &#x2F;.*n$&#x2F;img</span><br><span class="line">str1.match(reg1)		&#x2F;&#x2F;[&quot;Can u cAn a caN&quot;]，m修饰符无效，在整个串中进行匹配</span><br><span class="line">str2.match(reg1)		&#x2F;&#x2F;[&quot;Can u &quot;, &quot;cAn a caN&quot;]，从每一行行首开始进行匹配</span><br><span class="line">str3.match(reg2)		&#x2F;&#x2F;[&quot;a caN&quot;],从末行行尾匹配至倒数第一个换行符</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>【ES6】</strong><code>u</code>：Unicode模式，用来正确处理大于\uFFFF的Unicode字符，即可以正确处理4个字节的UTF-16编码</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const utf16Str &#x3D; &#39;\uD824\uDFB7&#39;</span><br><span class="line">&#x2F;^\uD824&#x2F;.test(utf16Str)		&#x2F;&#x2F;true，未能将utf16Str视为4个字节</span><br><span class="line">&#x2F;^\uD824&#x2F;u.test(utf16Str)		&#x2F;&#x2F;false</span><br><span class="line"></span><br><span class="line">&#x2F;𠮷&#123;2&#125;&#x2F;.test(&#39;𠮷𠮷&#39;)		&#x2F;&#x2F;false</span><br><span class="line">&#x2F;𠮷&#123;2&#125;&#x2F;u.test(&#39;𠮷𠮷&#39;)		&#x2F;&#x2F;true</span><br><span class="line"></span><br><span class="line">&#x2F;^\S$&#x2F;.test(𠮷)				&#x2F;&#x2F;false</span><br><span class="line">&#x2F;^\S$&#x2F;u.test(𠮷)			&#x2F;&#x2F;true</span><br><span class="line"></span><br><span class="line">&#x2F;[a-z]&#x2F;i.test(&#39;\u212A&#39;)		&#x2F;&#x2F;false，标准大写字母K的unicode码为\u004B</span><br><span class="line">&#x2F;[a-z]&#x2F;iu.test(&#39;\u212A&#39;)	&#x2F;&#x2F;true</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>【ES6】</strong><code>y</code>：粘连（sticky）模式，在全局匹配时确保匹配从剩余子串的第一个位置开始</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const str &#x3D; &#39;abc-abcabc&#39;</span><br><span class="line">const reg1 &#x3D; &#x2F;abc&#x2F;g</span><br><span class="line">const reg2 &#x3D; &#x2F;abc&#x2F;y</span><br><span class="line"></span><br><span class="line">reg1.exec(str)		&#x2F;&#x2F;index:0</span><br><span class="line">reg1.exec(str)		&#x2F;&#x2F;index:4	剩余子串任意位置开始</span><br><span class="line"></span><br><span class="line">reg2.exec(str)		&#x2F;&#x2F;index:0</span><br><span class="line">reg2.exec(str)		&#x2F;&#x2F;null  	剩余子串第一位开始，此处为&#39;-&#39;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>【ES6】</strong><code>s</code>：dotAll模式，使得<code>.</code>可以匹配行终止符</p>
+<p>行终止符有：</p>
+<ul>
+<li>\u000A  即换行符<code>\n</code></li>
+<li>\u000D  即回车符<code>\r</code></li>
+<li>\u2028  行分隔符</li>
+<li>\u2029  段分隔符</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;foo.bar&#x2F;.test(&#39;foo\nbar&#39;)		&#x2F;&#x2F;false</span><br><span class="line">&#x2F;foo.bar&#x2F;s&#x2F;test(&#39;foo\nbar&#39;)		&#x2F;&#x2F;true</span><br></pre></td></tr></table></figure>
+
+<h3 id="直接量字符"><a href="#直接量字符" class="headerlink" title="直接量字符"></a>直接量字符</h3><ul>
+<li><code>\o</code>：NULL字符（\u0000）</li>
+<li><code>\t</code>：制表符（\u0009）</li>
+<li><code>\n</code>：换行符（\u000A）</li>
+<li><code>\v</code>：垂直制表符（\u000B）</li>
+<li><code>\f</code>：换页符（\u000C）</li>
+<li><code>\r</code>：回车符（\u000D）</li>
+<li><code>\xnn</code>：由十六进制数nn指定的拉丁字符，如\x0A等价于\n</li>
+<li><code>\uxxxx</code>：由十六进制数制定的Unicode字符，如\u0009等价于\t</li>
+<li><code>\cX</code>：控制字符^X，如\cJ等价于换行符\n</li>
+<li><code>[\b]</code>：退格直接量，即Backspace</li>
+</ul>
+<h3 id="预设字符类"><a href="#预设字符类" class="headerlink" title="预设字符类"></a>预设字符类</h3><ul>
+<li><code>[]</code>：方括号内的任意字符</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const str &#x3D; &#39;1245azc&#39;</span><br><span class="line">const reg &#x3D; &#x2F;[2-5a-c]&#x2F;g</span><br><span class="line">str.match(reg)				&#x2F;&#x2F;[&quot;2&quot;, &quot;4&quot;, &quot;5&quot;, &quot;a&quot;, &quot;c&quot;]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>[^]</code>：非方括号内的任意字符</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const str &#x3D; &#39;1245azc&#39;</span><br><span class="line">const reg &#x3D; &#x2F;[^2-5a-c]&#x2F;g</span><br><span class="line">str.match(reg)		&#x2F;&#x2F;[&quot;1&quot;, &quot;z&quot;]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>.</code>：除行终止符之外的任意字符</li>
+<li><code>\w</code>：任何ASCII数字和大小写字母，等价于<code>[a-zA-Z0-9]</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const str1 &#x3D; &#39;A\u212A-47&#39;</span><br><span class="line">const str2 &#x3D; &#39;A\u004B-47&#39;</span><br><span class="line">const reg &#x3D; &#x2F;\w&#x2F;g</span><br><span class="line">str1.match(reg)		&#x2F;&#x2F;[&quot;A&quot;, &quot;4&quot;, &quot;7&quot;]</span><br><span class="line">str2.match(reg)		&#x2F;&#x2F;[&quot;A&quot;, &quot;K&quot;, &quot;4&quot;, &quot;7&quot;]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>\W</code>：任何非ASCII数字和大小写字母，等价于<code>[^a-zA-Z0-9]</code></p>
+</li>
+<li><p><code>\s</code>：任何Unicode空白符</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const str &#x3D; &#39;a\r1\n+\u2028-\u2029&#39;</span><br><span class="line">const reg &#x3D; &#x2F;\s&#x2F;g</span><br><span class="line">str.match(reg)				&#x2F;&#x2F;[&quot;&quot;, &quot;↵&quot;, &quot;&quot;, &quot;&quot;]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>\S</code>：任何非空白的Unicode字符</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const str &#x3D; &#39;a\r1\n+\u2028-\u2029&#39;</span><br><span class="line">const reg &#x3D; &#x2F;\S&#x2F;g</span><br><span class="line">str.match(reg)				&#x2F;&#x2F;[&quot;a&quot;, &quot;1&quot;, &quot;+&quot;, &quot;-&quot;]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>\d</code>：任何ASCII数字，等价于<code>[0-9]</code></li>
+<li><code>\D</code>：任何非ASCII数字，等价于<code>[^0-9]</code></li>
+</ul>
+<h3 id="重复数量"><a href="#重复数量" class="headerlink" title="重复数量"></a>重复数量</h3><ul>
+<li><code>{m,n}</code>：m&lt;=匹配前一项数量&lt;=n</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#39;a&#39;.match(&#x2F;a&#123;2,4&#125;&#x2F;g)		&#x2F;&#x2F;null</span><br><span class="line">&#39;aaaaa&#39;.match(&#x2F;a&#123;2,4&#125;&#x2F;g)	&#x2F;&#x2F;[&quot;aaaa&quot;]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>{m,}</code>：匹配前一项数量&gt;=m</li>
+<li><code>{n}</code>：匹配前一项n次</li>
+<li><code>？</code>：匹配前一项0次或1次，即{0,1}</li>
+<li><code>+</code>：匹配前一项1次或多次，即{1,}</li>
+<li><code>*</code>：匹配前一项0次或多次，即{0,}</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39;aaaa&#39;.match(&#x2F;a*&#x2F;g)			&#x2F;&#x2F;[&quot;aaaa&quot;, &quot;&quot;]  因为*会匹配0次&#39;a&#39;</span><br></pre></td></tr></table></figure>
+
+<h3 id="选择、分组、引用"><a href="#选择、分组、引用" class="headerlink" title="选择、分组、引用"></a>选择、分组、引用</h3><ul>
+<li><code>|</code>：选择，匹配该符号左边的表达式或右边的表达式，匹配顺序从左到右，左边匹配到就忽略右边匹配项</li>
+<li><code>()</code>：分组，将若干匹配项组合为一个匹配项，以对整体进行<code>?</code> <code>*</code> <code>+</code> <code>|</code>操作，且记忆分组内容供引用操作使用</li>
+<li><code>(?:)</code>：分组，将若干匹配项组合为一个匹配项，以对整体进行<code>?</code> <code>*</code> <code>+</code> <code>|</code>操作，不记忆分组内容</li>
+<li>\n：引用，n代表分组的序号</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;[&#39;&quot;][^&#39;]*[&#39;&quot;]&#x2F;	</span><br><span class="line">&#x2F;([&#39;&quot;])[^&#39;]*\1&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>两者等价，<code>\1</code>就是<code>([&#39;&quot;])</code>对这个分组的引用</p>
+<p>在<code>String.prototype.replace()</code>中，可以使用<code>$分组序号</code>的方式作为第二个参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str.replace(&#x2F;([&#39;&quot;])[^&#39;]*\1&#x2F;g,&quot;$1&quot;)		&#x2F;&#x2F;将单双引号及内容替换为每一组单双引号的起始&#39;&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="锚字符"><a href="#锚字符" class="headerlink" title="锚字符"></a>锚字符</h3><ul>
+<li><code>^</code>：匹配字符串的开头</li>
+<li><code>$</code>：匹配字符串的结尾</li>
+<li><code>\b</code>：匹配一个单词的边界</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const str &#x3D; &quot;this that sthiss&quot;</span><br><span class="line">str.match(&#x2F;this&#x2F;g)				&#x2F;&#x2F;[&quot;this&quot;,&quot;this&quot;]</span><br><span class="line">str.match(&#x2F;\bthis\b&#x2F;g)			&#x2F;&#x2F;[&quot;this&quot;]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>\B</code>：匹配非单词边界的位置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const str &#x3D; &quot;athat thatb cthatd&quot;</span><br><span class="line">const regA &#x3D; &#x2F;\Bthat&#x2F;g</span><br><span class="line">const regB &#x3D; &#x2F;that\B&#x2F;g</span><br><span class="line">const regCD &#x3D; &#x2F;\Bthat\B&#x2F;g</span><br><span class="line">str.match(regA)					&#x2F;&#x2F;[&quot;that&quot;, &quot;that&quot;]	athat,cthatd</span><br><span class="line">str.match(regB)					&#x2F;&#x2F;[&quot;that&quot;, &quot;that&quot;]	thatb,cthatd</span><br><span class="line">str.match(regCD)				&#x2F;&#x2F;[&quot;that&quot;]		cthatd</span><br></pre></td></tr></table></figure>
+
+<h3 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h3><ul>
+<li><code>/x(?=y)/</code>先行断言</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39;10% 20&#39;.match(&#x2F;\d+(?&#x3D;%)&#x2F;g)	&#x2F;&#x2F;[&quot;10&quot;]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>/x(?!y)/</code>先行否定断言</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39;10% 20&#39;.match(&#x2F;\d+(?!%)&#x2F;g)		&#x2F;&#x2F;[&quot;1&quot;, &quot;20&quot;]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>/(?&lt;=y)x/</code>后行断言</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39;$50 ￥100&#39;.match(&#x2F;(?&lt;&#x3D;\$)\d+&#x2F;g)	&#x2F;&#x2F;[&quot;50&quot;]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>/(?&lt;!y)x/</code>后行否定断言</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39;$50 ￥100&#39;.match(&#x2F;(?&lt;!\$)\d+&#x2F;g)	&#x2F;&#x2F;[&quot;0&quot;, &quot;100&quot;]</span><br></pre></td></tr></table></figure>
+
+<h3 id="RegExp实例属性"><a href="#RegExp实例属性" class="headerlink" title="RegExp实例属性"></a>RegExp实例属性</h3><table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>属性类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>global</td>
+<td>布尔值</td>
+<td>是否设置了g修饰符</td>
+</tr>
+<tr>
+<td>ignoreCase</td>
+<td>布尔值</td>
+<td>是否设置了i修饰符</td>
+</tr>
+<tr>
+<td>mutiline</td>
+<td>布尔值</td>
+<td>是否设置了m修饰符</td>
+</tr>
+<tr>
+<td>lastIndex</td>
+<td>整数</td>
+<td>一个计步器，表示开始搜索下一个匹配项的字符位置</td>
+</tr>
+<tr>
+<td>source</td>
+<td>字符串</td>
+<td>正则表达式的字符串表示，即不含<code>\\</code>与<code>修饰符</code>的部分</td>
+</tr>
+<tr>
+<td><strong>【ES6】</strong>sticky</td>
+<td>布尔值</td>
+<td>是否设置了y修饰符</td>
+</tr>
+<tr>
+<td><strong>【ES6】</strong>flags</td>
+<td>字符串</td>
+<td>正则表达式的修饰符</td>
+</tr>
+</tbody></table>
+<h3 id="RegExp实例方法"><a href="#RegExp实例方法" class="headerlink" title="RegExp实例方法"></a>RegExp实例方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const str &#x3D; &quot;where when what&quot;</span><br><span class="line">const regExp &#x3D; &#x2F;wh&#x2F;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>RegExp.prototype.exec(string)</strong> 返回首个匹配正则表达式的子串的首字符下标</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">regExp.exec(str)		&#x2F;&#x2F;[ &#39;wh&#39;, index: 0, input: &#39;where when what&#39;, groups: undefined ]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>RegExp.prototype.test(string)</strong> 返回字符串是否匹配正则表达式的布尔值</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">regExp.test(str)		&#x2F;&#x2F;true</span><br></pre></td></tr></table></figure>
+
+<h3 id="字符串实例方法"><a href="#字符串实例方法" class="headerlink" title="字符串实例方法"></a>字符串实例方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const str &#x3D; &quot;This string contains numbers 123 Capitalized LETTERS and +_^% Symbols&quot;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>String.prototype.match(RegExp)</strong> 返回匹配正则表达式的子串列表(g全局模式下)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str.match(&#x2F;Th.s&#x2F;g)		&#x2F;&#x2F;[&quot;This&quot;]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>String.prototype.replace(RegExp,String)</strong>返回用String替代匹配正则表达式的子串</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const reg1 &#x3D; &#x2F;[^0-9A-Za-z\s]&#x2F;g</span><br><span class="line">str.replace(reg1,&quot;&quot;)		</span><br><span class="line">&#x2F;&#x2F;&#39;This string contains numbers 123 Capitalized LETTERS and  Symbols&#39;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>String.prototype.search(RegExp)</strong>返回首个匹配正则表达式的子串首字符下标</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const reg2 &#x3D; &#x2F;\d&#x2F;g</span><br><span class="line">console.log(str.search(reg2));		&#x2F;&#x2F;29	即数字1的位置</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>String.prototype.split(RegExp)</strong>返回以匹配正则表达式的字符串为间隔的数组</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const reg3 &#x3D; &#x2F;\s&#x2F;g</span><br><span class="line">console.log(str.split(reg3));</span><br><span class="line">&#x2F;&#x2F;[&quot;This&quot;, &quot;string&quot;, &quot;contains&quot;, &quot;numbers&quot;, &quot;123&quot;, &quot;Capitalized&quot;, &quot;LETTERS&quot;, &quot;and&quot;, &quot;+_^%&quot;, &quot;Symbols&quot;]</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<blockquote>
+<p>【1】David Flanagan著. JavaScript权威指南（第6版）. 淘宝前端团队译.  机械工业出版社，2012.3</p>
+<p>【2】Nicholas C.Zakas著. 《JavaScript高级程序设计（第3版）》李松峰，曹力译. 人民邮电出版社，2012.3</p>
+<p>【3】阮一峰著. 《ES6标准入门（第3版）》. 电子工业出版社，2017.9</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/19/Electron-React%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/" rel="next" title="Electron-React环境搭建及进程通信">
+                <i class="fa fa-chevron-left"></i> Electron-React环境搭建及进程通信
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="夏紀ゆず" />
+            
+              <p class="site-author-name" itemprop="name">夏紀ゆず</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/o0desolation" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:o0desolation@hotmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建"><span class="nav-number">1.</span> <span class="nav-text">创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修饰符"><span class="nav-number">2.</span> <span class="nav-text">修饰符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直接量字符"><span class="nav-number">3.</span> <span class="nav-text">直接量字符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预设字符类"><span class="nav-number">4.</span> <span class="nav-text">预设字符类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重复数量"><span class="nav-number">5.</span> <span class="nav-text">重复数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择、分组、引用"><span class="nav-number">6.</span> <span class="nav-text">选择、分组、引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#锚字符"><span class="nav-number">7.</span> <span class="nav-text">锚字符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#断言"><span class="nav-number">8.</span> <span class="nav-text">断言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RegExp实例属性"><span class="nav-number">9.</span> <span class="nav-text">RegExp实例属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RegExp实例方法"><span class="nav-number">10.</span> <span class="nav-text">RegExp实例方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串实例方法"><span class="nav-number">11.</span> <span class="nav-text">字符串实例方法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">夏紀ゆず</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
